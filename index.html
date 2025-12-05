@@ -52,7 +52,7 @@
 <body class="bg-slate-200 text-slate-900 antialiased min-h-screen w-screen flex justify-center p-0 md:p-8 overflow-y-auto">
 
     <!-- Deck Container -->
-    <div id="deck-container" class="w-full h-full max-w-[1600px] aspect-video bg-white shadow-2xl relative overflow-hidden flex flex-col">
+    <div id="deck-container" class="w-full max-w-[1600px] bg-white shadow-2xl relative flex flex-col min-h-[600px]">
         <!-- Content will be injected here by JS -->
     </div>
 
@@ -735,7 +735,7 @@
             }
 
             container.innerHTML = `
-                <div class="flex-1 relative overflow-hidden flex flex-col">
+                <div class="flex-1 relative overflow-y-auto flex flex-col">
                     ${contentHTML}
                 </div>
                 <!-- Footer -->
