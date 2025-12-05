@@ -47,15 +47,30 @@
       @keyframes fadeIn { to { opacity: 1; } }
       @keyframes slideInUp { to { opacity: 1; transform: translateY(0); } }
       @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
+
+      /* >>> Base size for the slide deck (width only) <<< */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+    
+      #deck-container {
+        width: 1600px;              /* base slide width */
+        transform-origin: center center;
+      }
+
     </style>
 </head>
-<body class="bg-slate-200 text-slate-900 antialiased w-screen h-screen flex justify-center p-0 md:p-8 overflow-hidden">
+<body class="bg-slate-200 text-slate-900 antialiased w-screen h-screen flex items-center justify-center p-0 overflow-hidden">
 
 
     <!-- Deck Container -->
-    <div id="deck-container" class="w-full max-w-[1600px] bg-white shadow-2xl relative flex flex-col min-h-[600px]">
-        <!-- Content will be injected here by JS -->
+    <div
+      id="deck-container"
+      class="bg-white shadow-2xl relative flex flex-col rounded-3xl"
+    >
     </div>
+
 
     <script>
         // --- DATA ---
@@ -758,6 +773,7 @@
             `;
             
             lucide.createIcons();
+            resizeDeck();   // <<< NEW: rescale after rendering this slide
         }
 
         window.nextSlide = function() {
@@ -774,13 +790,38 @@
             }
         };
 
+        // Re-scale the deck so the whole slide fits in the window/iframe
+        function resizeDeck() {
+            const deck = document.getElementById('deck-container');
+            if (!deck) return;
+
+            // Reset scale to measure natural size
+            deck.style.transform = 'scale(1)';
+
+            const rect = deck.getBoundingClientRect();
+            const availableWidth = window.innerWidth;
+            const availableHeight = window.innerHeight;
+
+            // How much can we scale before hitting a side?
+            const scale = Math.min(
+                availableWidth / rect.width,
+                availableHeight / rect.height
+            );
+
+            deck.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', resizeDeck);
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
         renderSlide(currentSlideIndex);
+        resizeDeck();
 
     </script>
 </body>
 </html>
+
