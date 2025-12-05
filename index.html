@@ -1,0 +1,785 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The CrowdField dAIgest - Strategy Deck</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              crowdfield: {
+                DEFAULT: '#bfdeff', // Light Blue Accent (Base)
+                dark: '#4b92db',    // Darker blue for text/icons
+                light: '#f0f7ff',   // Very light shade for backgrounds
+                navy: '#1B2236',    // Dark Navy Background
+              }
+            },
+            fontFamily: {
+              sans: ['DM Sans', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+      body { font-family: 'DM Sans', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-family: 'DM Sans', sans-serif; font-weight: 700; }
+      
+      /* Animation Utilities */
+      .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+      .slide-in-up { animation: slideInUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+      .zoom-in { animation: zoomIn 0.5s ease-out forwards; opacity: 0; transform: scale(0.95); }
+      
+      @keyframes fadeIn { to { opacity: 1; } }
+      @keyframes slideInUp { to { opacity: 1; transform: translateY(0); } }
+      @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body class="bg-slate-200 text-slate-900 antialiased overflow-hidden w-screen h-screen flex items-center justify-center p-0 md:p-8">
+
+    <!-- Deck Container -->
+    <div id="deck-container" class="w-full h-full max-w-[1600px] aspect-video bg-white shadow-2xl relative overflow-hidden flex flex-col">
+        <!-- Content will be injected here by JS -->
+    </div>
+
+    <script>
+        // --- DATA ---
+        const slides = [
+            // SLIDE 0: TITLE
+            {
+                type: 'title',
+                title: 'The CrowdField d<span class="italic text-crowdfield">AI</span>gest',
+                headline: 'A monthly briefing that turns AI noise into clarity and strategic advantage for Oil & Gas'
+            },
+            // SLIDE 1: EXECUTIVE SUMMARY
+            {
+                type: 'summary-card',
+                title: 'Executive Summary',
+                headline: 'AI is reshaping O&G. The dAIgest keeps your teams ahead.',
+                items: [
+                    'Monthly intelligence brief for AI-in-O&G',
+                    'Curated news, tools, workflows, innovators, debates, and jobs',
+                    'Written for engineers, digital teams, and leaders',
+                    'Helps organizations track change and identify opportunities',
+                    'A clean, structured, high-signal format'
+                ]
+            },
+            // SLIDE 2: THE PROBLEM (2x2 Grid, Risk Cards)
+            {
+                type: 'problem-grid',
+                title: 'The Problem',
+                headline: 'The AI landscape in O&G moves faster than teams can track.',
+                items: [
+                    {
+                        icon: 'alert-circle',
+                        title: '1. Information Overload',
+                        text: 'Digital and technical teams drown in generic AI news, most of it irrelevant to subsurface data, production constraints, or field realities.'
+                    },
+                    {
+                        icon: 'shuffle',
+                        title: '2. Hype vs. Signal Confusion',
+                        text: 'With AI headlines scattered across platforms, teams struggle to separate strategic shifts from vendor buzz. Leaders lack a consistent lens to understand which developments will truly impact assets and workflows.'
+                    },
+                    {
+                        icon: 'hourglass',
+                        title: '3. Slow Execution & Entry Barriers',
+                        text: 'Engineers often want to experiment, but lack simple, practical entry points. This stalls workflow adoption, leaves innovation siloed, and turns AI into a "someday" initiative instead of a quarterly capability.'
+                    },
+                    {
+                        icon: 'eye-off',
+                        title: '4. Hidden Talent & Skill Gaps',
+                        text: 'As new AI skill sets emerge (e.g., agentic workflows, RAG search, open-source toolchains), HR and strategy teams have limited visibility. Blind spots prevent organisations from developing or hiring the right talent early.'
+                    }
+                ]
+            },
+            // SLIDE 3: THE SOLUTION (2x2 Grid, Value Cards)
+            {
+                type: 'solution-grid',
+                title: 'The Solution: The CrowdField d<span class="text-crowdfield-dark italic">AI</span>gest',
+                headline: 'A curated, O&G-specific monthly digest of the AI developments that matter.',
+                items: [
+                    {
+                        icon: 'shield-check',
+                        title: 'Built exclusively for energy professionals',
+                        text: 'Synthesizes global AI activity into one structured format.'
+                    },
+                    {
+                        icon: 'globe-2',
+                        title: 'Explains why it matters',
+                        text: 'For subsurface, operations, and corporate teams.'
+                    },
+                    {
+                        icon: 'rocket',
+                        title: 'Surfaces tools teams can adopt immediately',
+                        text: 'Predictable monthly cadence.'
+                    },
+                    {
+                        icon: 'calendar-clock',
+                        title: 'Predictable monthly cadence',
+                        text: 'A consistent, high-signal briefing that respects your time.' 
+                    }
+                ]
+            },
+            // SLIDE 4: NEWSLETTER STRUCTURE (4x2 Grid)
+            {
+                type: 'structure-grid',
+                title: 'Structure & Format',
+                headline: 'A high-signal newsletter built for clarity, relevance, and real-world application.',
+                items: [
+                    { title: 'Wavebreaker', text: 'Sets the narrative for the month by highlighting the dominant AI trend shaping Oil & Gas.', icon: 'waves' },
+                    { title: 'Top 10 Headlines', text: 'Cuts through noise to surface the most consequential AI developments... and explains why they matter for subsurface, operations, and corporate teams.', icon: 'list' },
+                    { title: 'Hot Topic', text: 'A focused dive into a major controversy, strategic shift, or breakout technology (e.g., Agentic AI), with clear industry implications.', icon: 'flame' },
+                    { title: 'AI Spotlight', text: 'Breaks down an emerging tool, startup, or open-source project with direct relevance to field workflows or engineering decision-making.', icon: 'search' },
+                    { title: 'Quick Win Workflow', text: 'Practical, bite-sized automations or AI workflows teams can deploy immediately to improve daily processes.', icon: 'zap' },
+                    { title: 'From the Crowd', text: 'Surfaces open-source creators, prototypes, and community insights shaping the next wave of O&G digital innovation.', icon: 'users' },
+                    { title: 'Job Radar', text: 'Tracks evolving AI-aligned skill requirements and highlights active roles shaping the workforce of the future.', icon: 'radar' },
+                    { title: 'Closing Block', text: 'Recaps key takeaways, invites feedback, and reinforces alignment with subscribers’ needs.', icon: 'check-square' }
+                ]
+            },
+            // SLIDE 5: Wavebreaker (Introduction)
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'Wavebreaker',
+                icon: 'zap',
+                title: 'Wavebreaker — The Month’s Big Picture',
+                headline: 'A sharp opener that frames the theme and strategic implications of the current AI-in-O&G landscape.',
+                content: `
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Focus & Alignment:</strong> Leaders and teams begin each issue with clarity, not noise, ensuring every downstream insight is interpreted through a shared strategic lens.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "01 Dec 2025",
+                    body: `<p>This issue dives into the AI surge reshaping oil and gas, from Chevron’s West Texas data power hub to Halliburton’s smart cementing tools. We spotlight SLB’s new agentic AI assistant, Exebenus' real-time drilling tech, and community highlights like Gabriel Serrao Seabra’s open-source tools. Plus, check out job listings, a no-mic-needed voiceover hack, and the growing digital-oilfield crossover.</p>`,
+                    tags: []
+                }
+            },
+             // SLIDE 6: Top 10 Headlines
+             {
+                type: 'section-deep-dive',
+                sectionTitle: 'Top 10 Headlines',
+                icon: 'newspaper',
+                title: 'O&G AI: Top 10 Headlines',
+                headline: 'This month’s most important AI stories making the news in O&G… and why they matter.',
+                content: `
+                    <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Prioritized Intelligence:</strong> Ensures immediate awareness of major moves without reading full articles.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "AI spending boom mirrors early shale-era ‘growth at all costs,’ says Carlyle Group",
+                    date: "26 Nov 2025",
+                    body: `<p>Jeff Currie of Carlyle Group draws parallels between today’s AI infrastructure investment and the shale boom’s debt-fueled expansion, highlighting risks that could echo the massive equity losses seen in the oil and gas industry.</p>`,
+                    links: [],
+                    tags: []
+                }
+            },
+            // Slide 7: AI Spotlight
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'AI Spotlight',
+                icon: 'search',
+                title: 'AI Spotlight',
+                headline: 'Shining a light on an AI player, project, or startup worth your attention.',
+                content: `
+                    <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Vendor/Tool Discovery:</strong> Vetted intelligence on solutions ready for pilot programs.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "Exebenus",
+                    body: `<p class="mb-3">Exebenus delivers AI-powered software tailored to optimize well operations in real time. For subsurface professionals, this means fewer delays, enhanced drilling performance, and faster decision-making backed by actionable data, ultimately improving asset delivery and reducing operational risk.</p>`,
+                    links: [{text: "https://exebenus.com/", url: "#"}],
+                    tags: []
+                }
+            },
+            // Slide 8: Quick Win Workflow
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'Quick Win Workflow',
+                icon: 'trending-up',
+                title: 'Quick Win Workflow',
+                headline: 'A bite-sized, step-by-step AI-driven process you can try today.',
+                content: `
+                    <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Immediate ROI:</strong> Lowers the barrier to entry for AI adoption.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "Add a Voiceover Without Saying a Word",
+                    body: `<p class="mb-2">Want to showcase your work but dread recording yourself? Here’s a simple workflow to create a clean, professional narration. No mic, no studio, no nerves.</p><p><strong>The flow:</strong><br/>1. Draft your script in ChatGPT<br/>2. Generate a natural voiceover in ElevenLabs<br/>3. Record your screen with OBS<br/>4. Sync visuals and audio in Clipchamp<br/>5. Add background music and export</p><p class="mt-2 text-sm italic">The result: a smooth, narrated walkthrough that looks and sounds polished... perfect for showcasing tools, dashboards, or workflows.</p>`,
+                    links: [{text: "How to Add a Voiceover to Your Work (Without Recording Yourself)", url: "#"}],
+                    tags: []
+                }
+            },
+            // Slide 9: From the Crowd
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'From the Crowd',
+                icon: 'globe',
+                title: 'From the Crowd',
+                headline: 'A spotlight on AI innovators in our O&G community.',
+                content: `
+                     <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Talent Unlock:</strong> Surfaces emerging innovators and highlights bottom-up technical breakthroughs across the O&G AI community.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "Gabriel Serrao Seabra",
+                    body: `<p>Gabriel Serrao Seabra just made a big move for the petroleum engineering community open-sourcing his pyResToolbox MCP Server.</p><p class="mt-2">Built on Mark Burgoyne’s pyResToolbox, this release packs 47 production-ready tools, enterprise-grade architecture, and flexible deployment via Docker or pip. It handles everything from PVT analysis and IPR generation to AOF calculations... all from a single natural-language query.</p><p class="mt-2">No code. No spreadsheets. Just engineering conversation.</p>`,
+                    links: [
+                        {text: "Explore the repo", url: "#", icon: "link"},
+                        {text: "Check out his post: LinkedIn Post", url: "#", icon: "monitor"}
+                    ],
+                    tags: []
+                }
+            },
+            // Slide 10: Hot Topic
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'Hot Topic',
+                icon: 'flame',
+                title: 'Hot Topic',
+                headline: 'A trending discussion or debate shaping the future of AI in O&G.',
+                content: `
+                     <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Informed Debate:</strong> Context to shape internal standards, governance, and long-term roadmaps.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "SLB Unveils Tela: Agentic AI for Energy",
+                    body: `<p>SLB has just introduced Tela, its new agentic AI assistant built specifically for the energy sector.</p><p class="mt-2">In a short video, Connor Gilboy shares his early thoughts on what this launch could mean for the future of AI-driven operations in oil and gas, and why it marks a shift from traditional digital tools to intelligent agents that can act.</p><p class="mt-2">Watch his take here:</p>`,
+                    links: [{text: "SLB launches Tela →", url: "#"}],
+                    tags: []
+                }
+            },
+            // Slide 11: Job Radar (NEW)
+            {
+                type: 'section-deep-dive',
+                sectionTitle: 'Job Radar',
+                icon: 'radar',
+                title: 'Job Radar',
+                headline: 'The latest AI-related roles in the energy industry, identifying emerging titles and skills.',
+                content: `
+                     <ul class="space-y-4 text-slate-700">
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Workforce Strategy:</strong> Real-time data to restructure job descriptions and focus upskilling programs.</span>
+                        </li>
+                         <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="text-crowdfield-dark w-5 h-5 shrink-0 mt-1"></i>
+                            <span><strong class="text-slate-900">Upskilling Targets:</strong> Identifies which tools are becoming industry standard.</span>
+                        </li>
+                    </ul>
+                `,
+                sampleContent: {
+                    title: "Emerging Roles: The 'Agent Orchestrator'",
+                    body: `<p>As tools like SLB's Tela emerge, we are seeing a shift from 'Data Scientist' requirements to 'Agentic Orchestration' skills.</p><div class="bg-slate-50 p-4 rounded mt-4 border border-slate-200 text-sm font-mono text-slate-600"><p class="font-bold text-slate-800 mb-1">REQ: Senior AI Engineer (Houston)</p><p>Must have experience with LLM function calling, semantic routing, and tool-use frameworks.</p></div>`,
+                    links: [],
+                    tags: ["HIRING", "SKILLS"]
+                }
+            },
+            // Slide 12: Enterprise Value Proposition (NEW)
+            {
+                type: 'value-prop-grid',
+                title: 'Enterprise Value Proposition',
+                headline: 'A force multiplier delivering distinct, tangible value to key functions across the organization.',
+                items: [
+                    {
+                        icon: 'briefcase',
+                        title: 'Executive Leadership',
+                        text: 'Strategic foresight on technology disruption and competitor moves. Supports smarter capital allocation and reduces investment risk through early signals on emerging shifts.'
+                    },
+                    {
+                        icon: 'layers',
+                        title: 'Digital & Innovation',
+                        text: 'Vetted intelligence on emerging vendors and open-source tools. Accelerates scouting and cuts noise-filtering workloads.'
+                    },
+                    {
+                        icon: 'zap',
+                        title: 'Engineering & Assets',
+                        text: 'Practical workflows and tool discovery deliver near-instant efficiency gains. “Quick Win” tutorials close the gap between concept and on-the-ground execution.'
+                    },
+                    {
+                        icon: 'users',
+                        title: 'HR & Workforce',
+                        text: 'Early signals on emerging skills and talent trends enable proactive hiring and targeted workforce development for the AI-enabled energy sector.'
+                    }
+                ]
+            },
+            // Slide 13: Partnership & Sponsorship (NEW)
+            {
+                type: 'partnership-cards',
+                title: 'Partnership & Co-Creation',
+                headline: 'Ways organisations and industry leaders can work with the dAIgest to amplify reach, share expertise, and unlock value for their teams.',
+                items: [
+                    {
+                        title: 'Teamwide Access',
+                        text: 'Give your teams access to a curated, high-signal AI briefing built specifically for O&GA low-cost, high-impact way to establish a shared AI vocabulary across technical, operations, and leadership groups.',
+                        tag: 'TEAM LICENSE'
+                    },
+                    {
+                        title: 'Featured Contributor',
+                        text: 'Partner with CrowdField to feature your insights, tools, case studies, or innovations inside the dAIgest. Ideal for experts, independents, or boutique consultancies looking to build authority and reach a highly targeted O&G audience.',
+                        tag: 'BE A CONTRIBUTOR'
+                    },
+                    {
+                        title: 'Knowledge Co-Creation',
+                        text: 'Collaborate on content, co-develop explainers or workflows, or share internal successes that can inform the wider industry. Perfect for teams wanting to shape the narrative while supporting independent O&G knowledge creation.',
+                        tag: 'CO-CREATE WITH US'
+                    }
+                ]
+            },
+            // Slide 14: Engagement Pathway (NEW)
+            {
+                type: 'engagement-steps',
+                title: 'Engagement Pathway',
+                headline: 'A simple path for organizations to adopt the CrowdField dAIgest as their monthly AI intelligence briefing.',
+                items: [
+                    {
+                        step: 1,
+                        title: 'Review Sample Issues',
+                        text: 'Your leadership or digital team reviews 1–2 sample editions to confirm relevance, tone, and strategic value.'
+                    },
+                    {
+                        step: 2,
+                        title: 'Select a License',
+                        text: 'Choose the plan that fits your needs: Team License (5–20 readers), Department License (20–100 readers), Enterprise License (100+ readers). Each license grants monthly delivery of the dAIgest to approved internal recipients.'
+                    },
+                    {
+                        step: 3,
+                        title: 'Distribute Internally',
+                        text: 'Once licensed, your team receives the newsletter on a fixed monthly cadence. You decide how it is forwarded, integrated, or referenced inside your organisation.'
+                    }
+                ]
+            },
+            // SLIDE 15: CTA
+            {
+                type: 'cta',
+                title: 'Begin the Partnership',
+                content: `
+                    <div class="text-center">
+                        <div class="mb-8 flex flex-col items-center justify-center">
+                             <img src="logo.png" alt="CrowdField" class="h-24 w-auto mb-6" />
+                             <div class="h-1 w-24 bg-crowdfield mx-auto"></div>
+                         </div>
+                        <!-- Headline + subcopy -->
+                        <h3 class="text-3xl md:text-4xl text-blue-100 mb-3">
+                            Ready to accelerate your AI strategy?
+                        </h3>
+                        <p class="text-sm md:text-base text-blue-100/80 max-w-xl mx-auto mb-10">
+                            Email me to explore a 90-day dAIgest pilot for your teams, or to discuss
+                            sponsorship and internal distribution options.
+                        </p>
+
+                        <!-- Contact card (McKinsey-style) -->
+                        <div class="inline-block text-left max-w-md w-full bg-white/5 border border-white/12 rounded-lg px-8 py-7">
+                            <div class="flex items-start gap-4">
+                                <div class="h-12 w-1 rounded-full bg-crowdfield mt-1"></div>
+                                <div class="flex-1">
+                                    <p class="text-[11px] tracking-[0.18em] uppercase text-slate-300 mb-3">
+                                        Primary contact
+                                    </p>
+
+                                    <p class="text-2xl font-semibold text-white leading-tight">
+                                        Alan Mourgues
+                                    </p>
+                                    <p class="text-sm text-blue-100/85 mb-5">
+                                        Founder, CrowdField
+                                    </p>
+
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <span class="text-slate-400">Email</span>
+                                            <a
+                                                href="mailto:alan@crowdfield.net?subject=CrowdField%20dAIgest%20%E2%80%93%20Enterprise%20pilot"
+                                                class="font-mono text-crowdfield hover:text-white transition-colors"
+                                            >
+                                                alan@crowdfield.net
+                                            </a>
+                                        </div>
+                                        <div class="flex items-center justify-between gap-4">
+                                            <span class="text-slate-400">Website</span>
+                                            <a
+                                                href="https://www.crowdfield.net"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="font-mono text-blue-100 hover:text-white transition-colors"
+                                            >
+                                                crowdfield.net
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Primary CTA button -->
+                        <div class="mt-8">
+                            <a
+                                href="mailto:alan@crowdfield.net?subject=CrowdField%20dAIgest%20%E2%80%93%2090-day%20pilot"
+                                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-crowdfield text-slate-900 font-semibold text-xs md:text-sm tracking-widest uppercase hover:bg-crowdfield-dark hover:text-white transition-colors"
+                            >
+                                <span>Explore a 90-day pilot</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                `
+            }
+
+
+        ];
+
+        // --- RENDER LOGIC ---
+        let currentSlideIndex = 0;
+        const container = document.getElementById('deck-container');
+
+        function renderSlide(index) {
+            const slide = slides[index];
+            const progress = ((index + 1) / slides.length) * 100;
+            const isDark = slide.type === 'title';
+
+            let contentHTML = '';
+
+            // SLIDE 0: TITLE
+            if (slide.type === 'title') {
+                contentHTML = `
+                    <div class="absolute inset-0 bg-[#1B2236]"></div>
+                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-1/3 h-full opacity-50 pointer-events-none">
+                         <svg viewBox="0 0 100 100" class="w-full h-full text-crowdfield stroke-current fill-none" stroke-width="0.5">
+                            <path d="M0,50 Q25,30 50,50 T100,50" />
+                            <path d="M0,55 Q25,35 50,55 T100,55" opacity="0.5" />
+                            <path d="M0,60 Q25,40 50,60 T100,60" opacity="0.3" />
+                         </svg>
+                    </div>
+                    <div class="relative z-10 h-full flex flex-col justify-center px-16 fade-in">
+                        <img src="logo.png" alt="CrowdField" class="h-20 w-auto mb-12 self-start" />
+                        <h1 class="text-7xl font-bold text-white mb-6 leading-tight">${slide.title}</h1>
+                        <h2 class="text-3xl font-light text-slate-300">${slide.headline}</h2>
+                    </div>
+                `;
+            } 
+            // SLIDE 1: SUMMARY CARD
+            else if (slide.type === 'summary-card') {
+                contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex items-center justify-between p-20 gap-16 fade-in">
+                        <div class="flex-1">
+                            <div class="h-1 w-20 bg-crowdfield-navy mb-8"></div>
+                            <h2 class="text-6xl font-bold text-slate-900 mb-8 leading-tight">${slide.title}</h2>
+                            <p class="text-3xl text-slate-500 font-light leading-relaxed">${slide.headline}</p>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">
+                                <div class="bg-crowdfield-navy px-8 py-6 flex items-center justify-between">
+                                    <span class="text-white font-bold uppercase tracking-widest text-sm">Strategic Brief</span>
+                                    <div class="flex gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                    </div>
+                                </div>
+                                <div class="p-10 bg-slate-50">
+                                    <ul class="space-y-6">
+                                        ${slide.items.map(item => `
+                                            <li class="flex items-start gap-4">
+                                                <div class="mt-1 bg-crowdfield text-crowdfield-navy rounded-full p-1">
+                                                    <i data-lucide="check" class="w-4 h-4 stroke-[3px]"></i>
+                                                </div>
+                                                <span class="text-xl text-slate-700 font-medium">${item}</span>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                `;
+            }
+            // SLIDE 2: PROBLEM GRID (Cards)
+            else if (slide.type === 'problem-grid') {
+                 contentHTML = `
+                     <div class="absolute inset-0 bg-slate-50"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                        <div class="mb-12">
+                            <h2 class="text-5xl font-bold text-slate-900 mb-4">${slide.title}</h2>
+                            <p class="text-2xl text-slate-500 font-light">${slide.headline}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-8 flex-1">
+                             ${slide.items.map((item, i) => `
+                                <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 flex flex-col items-start hover:-translate-y-1 transition-transform duration-300 slide-in-up" style="animation-delay: ${i * 100}ms">
+                                    <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 mb-6 shrink-0">
+                                        <i data-lucide="${item.icon}" class="w-7 h-7"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-slate-900 mb-3">${item.title}</h3>
+                                        <p class="text-slate-600 leading-relaxed text-base">${item.text}</p>
+                                    </div>
+                                </div>
+                             `).join('')}
+                        </div>
+                     </div>
+                 `;
+            }
+            // SLIDE 3: SOLUTION GRID (2x2 Cards)
+            else if (slide.type === 'solution-grid') {
+                contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                        <div class="mb-12">
+                            <h2 class="text-5xl font-bold text-slate-900 mb-4">The Solution</h2>
+                            <p class="text-2xl text-slate-400 font-light">${slide.headline}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-8 flex-1">
+                            ${slide.items.map((item, i) => `
+                                <div class="bg-white p-8 rounded-2xl shadow-xl border-l-8 border-crowdfield flex flex-col justify-start hover:-translate-y-1 transition-transform duration-300 slide-in-up" style="animation-delay: ${i * 100}ms">
+                                    <div class="w-14 h-14 bg-crowdfield/20 rounded-2xl flex items-center justify-center text-crowdfield-navy mb-6 shrink-0">
+                                        <i data-lucide="${item.icon}" class="w-7 h-7"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-900 mb-3 leading-tight">${item.title}</h3>
+                                    <p class="text-lg text-slate-600">${item.text}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                     </div>
+                `;
+            }
+            // SLIDE 4: NEWSLETTER STRUCTURE (4x2 Grid)
+            else if (slide.type === 'structure-grid') {
+                contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                        <div class="mb-10 flex items-end justify-between border-b border-slate-100 pb-8">
+                            <div>
+                                <h2 class="text-5xl font-bold text-slate-900 mb-2">${slide.title}</h2>
+                                <p class="text-2xl text-slate-400 font-light">${slide.headline}</p>
+                            </div>
+                            <div class="text-right text-crowdfield-dark font-bold uppercase tracking-widest text-sm">Monthly Roadmap</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-6 flex-1">
+                            ${slide.items.map((item, i) => `
+                                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:border-crowdfield hover:shadow-lg transition-all duration-300 group slide-in-up" style="animation-delay: ${i * 75}ms">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <span class="text-4xl font-bold text-slate-200 group-hover:text-crowdfield transition-colors font-mono">0${i+1}</span>
+                                        <i data-lucide="${item.icon}" class="w-6 h-6 text-slate-400 group-hover:text-crowdfield-dark"></i>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-crowdfield-navy">${item.title}</h3>
+                                    <p class="text-sm text-slate-600 leading-relaxed">${item.text}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                     </div>
+                `;
+            }
+            // NEW: VALUE PROP GRID
+            else if (slide.type === 'value-prop-grid') {
+                contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                         <div class="mb-12 relative">
+                             <div class="h-1 w-16 mb-4 bg-blue-900"></div>
+                             <h2 class="text-5xl font-bold text-slate-900 mb-4">${slide.title}</h2>
+                             <p class="text-2xl text-slate-500 font-light max-w-4xl">${slide.headline}</p>
+                         </div>
+                         <div class="grid grid-cols-2 gap-8 flex-1">
+                             ${slide.items.map((item, i) => `
+                                 <div class="bg-slate-50 p-10 rounded-xl border-l-4 border-blue-900 shadow-sm flex flex-col justify-start hover:shadow-lg transition-shadow">
+                                     <div class="flex items-center gap-4 mb-4">
+                                         <i data-lucide="${item.icon}" class="w-8 h-8 text-blue-900"></i>
+                                         <h3 class="text-2xl font-bold text-blue-900">${item.title}</h3>
+                                     </div>
+                                     <p class="text-lg text-slate-600 leading-relaxed">${item.text}</p>
+                                 </div>
+                             `).join('')}
+                         </div>
+                     </div>
+                `;
+            }
+            // NEW: PARTNERSHIP CARDS
+            else if (slide.type === 'partnership-cards') {
+                 contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                         <div class="mb-12 text-center">
+                             <div class="h-1 w-16 mb-6 bg-blue-900 mx-auto"></div>
+                             <h2 class="text-5xl font-bold text-slate-900 mb-4">${slide.title}</h2>
+                             <p class="text-2xl text-slate-500 font-light">${slide.headline}</p>
+                         </div>
+                         <div class="grid grid-cols-3 gap-8 flex-1 items-stretch">
+                             ${slide.items.map((item, i) => `
+                                 <div class="bg-white p-10 rounded-2xl shadow-xl border border-slate-100 flex flex-col items-center text-center relative group hover:border-crowdfield transition-colors duration-300">
+                                     <div class="absolute top-4 right-4 text-6xl font-bold text-slate-100 group-hover:text-crowdfield/20 transition-colors">${i+1}</div>
+                                     <h3 class="text-xl font-bold text-blue-900 mb-6 uppercase tracking-wider relative z-10">${item.title}</h3>
+                                     <p class="text-slate-600 leading-relaxed mb-8 flex-1 relative z-10">${item.text}</p>
+                                     <span class="inline-block bg-blue-50 text-blue-800 text-sm font-bold px-4 py-2 rounded-full uppercase tracking-wide">${item.tag}</span>
+                                 </div>
+                             `).join('')}
+                         </div>
+                     </div>
+                 `;
+            }
+            // NEW: ENGAGEMENT STEPS
+            else if (slide.type === 'engagement-steps') {
+                 contentHTML = `
+                     <div class="absolute inset-0 bg-white"></div>
+                     <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                         <div class="mb-16">
+                             <div class="h-1 w-16 mb-4 bg-blue-900"></div>
+                             <h2 class="text-5xl font-bold text-slate-900 mb-4">${slide.title}</h2>
+                             <p class="text-2xl text-slate-500 font-light max-w-4xl">${slide.headline}</p>
+                         </div>
+                         <div class="flex-1 flex items-center justify-between relative px-12">
+                             <!-- Line -->
+                             <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -z-10 transform -translate-y-1/2"></div>
+                             
+                             ${slide.items.map((item, i) => `
+                                 <div class="bg-white p-10 rounded-2xl shadow-xl border border-slate-100 w-1/3 mx-4 flex flex-col items-center text-center relative hover:-translate-y-2 transition-transform duration-300">
+                                     <div class="w-16 h-16 rounded-full bg-blue-900 text-white flex items-center justify-center text-2xl font-bold mb-6 border-4 border-white shadow-lg absolute -top-8">${item.step}</div>
+                                     <h3 class="text-2xl font-bold text-slate-900 mb-4 mt-8">${item.title}</h3>
+                                     <p class="text-slate-600 leading-relaxed">${item.text}</p>
+                                 </div>
+                             `).join('')}
+                         </div>
+                     </div>
+                 `;
+            }
+            // DEEP DIVES & CTA
+            else if (slide.type === 'section-deep-dive') {
+                const sample = slide.sampleContent;
+                let tagsHTML = sample.tags ? sample.tags.map(t => `<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full uppercase tracking-wide font-bold">${t}</span>`).join('') : '';
+                
+                let linksHTML = '';
+                if (sample.links && sample.links.length > 0) {
+                     linksHTML = sample.links.map(l => `
+                        <div class="mt-4 flex items-center gap-2 text-blue-600 font-semibold hover:underline">
+                            ${l.icon ? `<i data-lucide="${l.icon}" class="w-4 h-4"></i>` : ''}
+                            <a href="#" class="text-sm">${l.text}</a>
+                        </div>
+                     `).join('');
+                }
+
+                contentHTML = `
+                    <div class="absolute inset-0 bg-white"></div>
+                    <div class="relative z-10 h-full flex flex-col p-16 fade-in">
+                         <div class="mb-8 relative z-20">
+                            <div class="h-1 w-16 mb-4 bg-blue-900"></div>
+                            <h2 class="text-4xl font-bold mb-3 text-slate-900">${slide.title}</h2>
+                            <p class="text-xl max-w-4xl font-light text-slate-500">${slide.headline}</p>
+                        </div>
+                        <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-4 text-crowdfield-dark mb-2">
+                                    <div class="p-3 bg-crowdfield-light rounded-full">
+                                        <i data-lucide="${slide.icon}" class="w-6 h-6"></i>
+                                    </div>
+                                    <span class="font-bold uppercase tracking-widest text-sm">${slide.sectionTitle}</span>
+                                </div>
+                                <div class="text-lg">${slide.content}</div>
+                            </div>
+                             <div class="bg-slate-100 rounded-xl p-8 lg:p-12 flex items-center justify-center relative zoom-in">
+                                <div class="absolute top-0 right-0 bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-20">Sample</div>
+                                <div class="bg-white w-full max-w-md mx-auto shadow-2xl rounded-sm border border-slate-200 overflow-hidden transform rotate-1">
+                                    <div class="h-2 bg-blue-900 w-full"></div>
+                                    <div class="p-8">
+                                        <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">${sample.date || ''}</div>
+                                        <h4 class="text-xl font-bold text-blue-600 mb-4 leading-tight">${sample.title}</h4>
+                                        <div class="text-sm text-slate-800 leading-relaxed mb-4 space-y-4 font-serif">${sample.body}</div>
+                                        ${linksHTML}
+                                        <div class="flex gap-2 mt-4">${tagsHTML}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (slide.type === 'cta') {
+                 contentHTML = `
+                    <div class="absolute inset-0 bg-[#1B2236]"></div>
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center fade-in">
+                         ${slide.content}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="flex-1 relative overflow-hidden flex flex-col">
+                    ${contentHTML}
+                </div>
+                <!-- Footer -->
+                <div class="h-16 border-t ${isDark ? 'border-white/10 bg-blue-950/80 text-white' : 'border-slate-200 bg-white text-slate-500'} flex items-center justify-between px-8 relative z-20">
+                     <div class="flex items-center gap-4 text-xs font-semibold uppercase tracking-widest">
+                        <span class="${isDark ? 'text-crowdfield' : 'text-blue-900'}">CrowdField</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 h-1 bg-crowdfield transition-all duration-300 ease-out" style="width: ${progress}%"></div>
+                    <div class="flex items-center gap-2">
+                         <span class="text-xs mr-4 opacity-60">Slide ${index + 1} of ${slides.length}</span>
+                         <button onclick="prevSlide()" class="p-2 rounded-full hover:bg-black/5 disabled:opacity-20 transition-colors ${isDark ? 'hover:bg-white/10' : ''}" ${index === 0 ? 'disabled' : ''}>
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="nextSlide()" class="p-2 rounded-full hover:bg-black/5 disabled:opacity-20 transition-colors ${isDark ? 'hover:bg-white/10' : ''}" ${index === slides.length - 1 ? 'disabled' : ''}>
+                             <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        window.nextSlide = function() {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                renderSlide(currentSlideIndex);
+            }
+        };
+
+        window.prevSlide = function() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                renderSlide(currentSlideIndex);
+            }
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        renderSlide(currentSlideIndex);
+
+    </script>
+</body>
+</html>
