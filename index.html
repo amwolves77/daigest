@@ -61,7 +61,8 @@
 
     </style>
 </head>
-<body class="bg-slate-200 text-slate-900 antialiased w-screen h-screen flex items-start justify-center p-0 overflow-hidden">
+<body class="bg-slate-200 text-slate-900 antialiased min-h-screen w-screen flex justify-center p-0 md:p-8 overflow-y-auto">
+
 
 
     <!-- Deck Container -->
@@ -482,6 +483,10 @@
         // --- RENDER LOGIC ---
         let currentSlideIndex = 0;
         const container = document.getElementById('deck-container');
+        
+        // Are we running inside an iframe (e.g. embedded in Webflow)?
+        const inIframe = window.self !== window.top;
+
 
         function renderSlide(index) {
             const slide = slides[index];
@@ -773,8 +778,11 @@
             `;
             
             lucide.createIcons();
-            resizeDeck();   // <<< NEW: rescale after rendering this slide
+            if (inIframe) {
+                resizeDeck();
+            }
         }
+
 
         window.nextSlide = function() {
             if (currentSlideIndex < slides.length - 1) {
@@ -811,7 +819,10 @@
             deck.style.transform = `scale(${scale})`;
         }
 
-        window.addEventListener('resize', resizeDeck);
+        if (inIframe) {
+            window.addEventListener('resize', resizeDeck);
+        }
+
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
@@ -819,7 +830,10 @@
         });
 
         renderSlide(currentSlideIndex);
-        resizeDeck();
+        if (inIframe) {
+            resizeDeck();
+        }
+
 
     </script>
 </body>
