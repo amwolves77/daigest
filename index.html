@@ -55,13 +55,15 @@
       }
     
       #deck-container {
-        width: 1600px;              /* base slide width */
+        width: 1600px;
+        height: 900px;
         transform-origin: center center;
       }
 
+
     </style>
 </head>
-<body class="bg-slate-200 text-slate-900 antialiased min-h-screen w-screen flex justify-center p-0 md:p-8 overflow-y-auto">
+<body class="bg-slate-200 text-slate-900 antialiased w-screen h-screen flex items-center justify-center p-0 overflow-hidden">
 
 
 
@@ -829,13 +831,29 @@
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        renderSlide(currentSlideIndex);
-        if (inIframe) {
-            resizeDeck();
+        // --- SCALE DECK TO FIT ANY VIEWPORT ---
+        function scaleDeck() {
+            const deck = document.getElementById('deck-container');
+            if (!deck) return;
+
+            const BASE_W = 1600;
+            const BASE_H = 900;
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            const scale = Math.min(vw / BASE_W, vh / BASE_H);
+
+            deck.style.transform = `scale(${scale})`;
         }
 
+        window.addEventListener('resize', scaleDeck);
 
+        // Render the first slide, THEN scale to fit
+        renderSlide(currentSlideIndex);
+        scaleDeck();
     </script>
+
 </body>
 </html>
 
